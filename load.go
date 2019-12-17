@@ -8,6 +8,9 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+
+	"regexp"
+	"log"
 )
 
 // LoadFromReader - Load csv from an io.Reader and put it in a array of the destination's type using tags.
@@ -151,7 +154,12 @@ func mapToDestination(header []string, content [][]string, destination interface
 	// Map each header name to its index.
 	headerMap := make(map[string]int)
 	for i, name := range header {
-		headerMap[strings.TrimSpace(name)] = i
+		reg, err := regexp.Compile("[^a-z_]+")
+		if err != nil {
+			log.Fatal(err)
+		}
+		s := reg.ReplaceAllString(name, "")
+		headerMap[s] = i
 	}
 
 	// Create the slice to put the values in.
