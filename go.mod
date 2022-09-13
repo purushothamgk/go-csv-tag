@@ -1,3 +1,3 @@
-module github.com/artonge/go-csv-tag/v2
+module github.com/purushothamgk/go-csv-tag
 
 go 1.12
